@@ -1,0 +1,185 @@
+
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Task Space | Quản lý công việc</title>
+    <link rel="stylesheet" href="style.css">
+    <script src="script.js" defer></script>
+</head>
+<body>
+    <header class="site-header">
+        <div class="header-inner">
+            <div class="brand">
+                <div class="brand-mark">T</div>
+                <div class="header-copy">
+                    <h1>MINI TASK MANAGER</h1>
+                    <p>QUẢN LÝ CÔNG VIỆC CÁ NHÂN</p>
+                </div>
+            </div>
+            <div class="header-date">
+                <span class="date-icon">✦</span>
+                <span id="todayLabel">Hôm nay</span>
+            </div>
+        </div>
+    </header>
+
+    <main class="container">
+        <section class="welcome-section">
+            <div class="welcome-copy">
+                <span class="eyebrow">YOUR DAILY PLANNER</span>
+                <h2>Lên kế hoạch.<br><span>Hoàn thành mục tiêu.</span></h2>
+                <p>Quản lý công việc mỗi ngày và theo dõi tiến độ của bạn tại một nơi.</p>
+            </div>
+
+            <div class="progress-card">
+                <div class="progress-heading">
+                    <span>TIẾN ĐỘ CỦA BẠN</span>
+                    <span class="progress-sparkle">✧</span>
+                </div>
+                <div class="progress-ring" id="progressRing">
+                    <div class="progress-inner">
+                        <strong id="progressPercent">0%</strong>
+                        <span>hoàn thành</span>
+                    </div>
+                </div>
+                <p id="progressText">Bắt đầu với nhiệm vụ đầu tiên nhé!</p>
+            </div>
+        </section>
+
+        <section class="stats-grid">
+            <article class="stat-card stat-total">
+                <div class="stat-top">
+                    <span>TỔNG CÔNG VIỆC</span>
+                    <span class="stat-icon">▤</span>
+                </div>
+                <strong id="totalCount">0</strong>
+                <p>Tất cả nhiệm vụ</p>
+            </article>
+
+            <article class="stat-card stat-pending">
+                <div class="stat-top">
+                    <span>ĐANG THỰC HIỆN</span>
+                    <span class="stat-icon">◷</span>
+                </div>
+                <strong id="pendingCount">0</strong>
+                <p>Cần bạn xử lý</p>
+            </article>
+
+            <article class="stat-card stat-done">
+                <div class="stat-top">
+                    <span>ĐÃ HOÀN THÀNH</span>
+                    <span class="stat-icon">✓</span>
+                </div>
+                <strong id="doneCount">0</strong>
+                <p>Những mục tiêu đã đạt</p>
+            </article>
+
+            <article class="stat-card stat-overdue">
+                <div class="stat-top">
+                    <span>QUÁ HẠN</span>
+                    <span class="stat-icon">!</span>
+                </div>
+                <strong id="overdueCount">0</strong>
+                <p>Cần được chú ý</p>
+            </article>
+        </section>
+
+        <section class="workspace">
+            <aside class="form-panel">
+                <div class="section-heading">
+                    <span class="heading-number">01</span>
+                    <div>
+                        <h2>Tạo nhiệm vụ</h2>
+                        <p>Thêm công việc mới vào kế hoạch.</p>
+                    </div>
+                </div>
+
+                <form id="taskForm">
+                    <div class="form-group">
+                        <label for="taskName">Tên công việc</label>
+                        <input
+                            type="text"
+                            id="taskName"
+                            placeholder="Ví dụ: Hoàn thành bài tập..."
+                            required
+                        >
+                    </div>
+
+                    <div class="form-group">
+                        <label for="taskDeadline">Hạn hoàn thành</label>
+                        <input type="date" id="taskDeadline" required>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="taskPriority">Mức độ ưu tiên</label>
+                        <select id="taskPriority" required>
+                            <option value="low">Thấp</option>
+                            <option value="medium" selected>Trung bình</option>
+                            <option value="high">Cao</option>
+                        </select>
+                    </div>
+
+                    <p id="errorMessage" class="error-message"></p>
+
+                    <button type="submit" class="add-button">
+                        <span>＋</span> Thêm công việc
+                    </button>
+                </form>
+
+                <div class="form-note">
+                    <span>✦</span>
+                    <p>Một kế hoạch tốt bắt đầu từ những việc nhỏ.</p>
+                </div>
+            </aside>
+
+            <section class="tasks-panel">
+                <div class="tasks-heading">
+                    <div class="section-heading">
+                        <span class="heading-number">02</span>
+                        <div>
+                            <h2>Nhiệm vụ của tôi</h2>
+                            <p>Theo dõi và quản lý công việc.</p>
+                        </div>
+                    </div>
+                    <span class="task-count" id="visibleCount">0 nhiệm vụ</span>
+                </div>
+
+                <div class="task-tools">
+                    <div class="search-box">
+                        <span>⌕</span>
+                        <input
+                            type="search"
+                            id="searchInput"
+                            placeholder="Tìm kiếm công việc..."
+                        >
+                    </div>
+
+                    <select id="statusFilter" aria-label="Lọc theo trạng thái">
+                        <option value="all">Tất cả trạng thái</option>
+                        <option value="pending">Đang thực hiện</option>
+                        <option value="done">Đã hoàn thành</option>
+                        <option value="overdue">Quá hạn</option>
+                    </select>
+                </div>
+
+                <div id="taskList" class="task-list"></div>
+
+                <div id="emptyMessage" class="empty-message">
+                    <div class="empty-icon">✧</div>
+                    <h3>Chưa có nhiệm vụ nào</h3>
+                    <p>Thêm một công việc để bắt đầu kế hoạch của bạn.</p>
+                </div>
+            </section>
+        </section>
+        <footer class="site-footer">
+            <div class="footer-brand">TASK SPACE <span>✦</span></div>
+            <div class="student-info">
+                <p>Họ và tên: Nguyễn Thu Trang</p>
+                <p>Mã sinh viên: 224001756</p>
+            </div>
+        </footer>
+    </main>
+</body>
+</html>
